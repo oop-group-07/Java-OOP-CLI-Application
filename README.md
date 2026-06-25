@@ -83,7 +83,9 @@ src/
 │
 ├── file/
 │   └── FileManager.java
-│
+|___ ui/
+│    └── MainMenu.java
+|
 └── Main.java
 ```
 
