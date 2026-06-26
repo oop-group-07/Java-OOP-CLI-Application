@@ -1,5 +1,5 @@
 package edu.model;
 
-public class Person {
+abstract class Person {
     
 }
