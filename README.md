@@ -63,15 +63,30 @@ The system allows university departments to manage students, courses, marks, gra
 ```
 src/
 │
-├── Main.java
-├── UniversityManagementSystem.java
-├── Person.java
-├── Student.java
-├── Course.java
-├── Result.java
-├── GPACalculator.java
-├── FileManager.java
-└── Reportable.java
+├── model/
+│   ├── Person.java
+│   ├── Student.java
+│   ├── Course.java
+│   └── Result.java
+│
+├── service/
+│   ├── StudentService.java
+│   ├── CourseService.java
+│   ├── ResultService.java
+│   ├── GPACalculator.java
+│   └── ReportService.java
+│
+├── repository/
+│   ├── StudentRepository.java
+│   ├── CourseRepository.java
+│   └── ResultRepository.java
+│
+├── file/
+│   └── FileManager.java
+|___ ui/
+│    └── MainMenu.java
+|
+└── Main.java
 ```
 
 ---
@@ -115,26 +130,6 @@ The system stores data using text files:
 
 ---
 
-## 🖥️ Sample Menu
-
-```text
-===== UNIVERSITY STUDENT MANAGEMENT SYSTEM =====
-
-1. Add New Student
-2. View All Students
-3. Search Student by ID
-4. Add Course
-5. View All Courses
-6. Add Marks for a Student
-7. Calculate Grade
-8. Generate Student Report
-9. Save Data to Files
-10. Load Data from Files
-11. Exit
-```
-
----
-
 ## 🚀 Technologies Used
 
 - Java
@@ -143,6 +138,7 @@ The system stores data using text files:
 - File Handling
 - Exception Handling
 - Command Line Interface (CLI)
+- Layered Architecture
 
 ---
 
@@ -152,39 +148,15 @@ This project demonstrates:
 
 - Real-world OOP Design
 - Data Management using Collections
-- File Persistence without Databases
 - Academic GPA Calculation Logic
 - Software Validation Techniques
 - Exception Handling Best Practices
 
 ---
 
-## 👨‍💻 Team Members
-
-| Name | Role |
-|--------|--------|
-| Member 1 | Development |
-| Member 2 | Development |
-| Member 3 | Development |
-| Member 4 | Development |
-
-(Add your team details here)
-
----
-
-## 📷 Screenshots
-
-Add screenshots of:
-- Main Menu
-- Student Management
-- Course Management
-- GPA Report Generation
-
----
-
 ## 📜 License
 
-This project was developed for educational purposes as part of a Java OOP coursework assignment.
+This project was developed for educational purposes as part of a Java OOP coursework assignment project.
 
 ---
 
