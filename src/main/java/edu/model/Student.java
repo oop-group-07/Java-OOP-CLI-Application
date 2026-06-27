@@ -11,14 +11,13 @@ public class Student extends Person{
     private String email;
 
     public Student(String studentId, String registrationNumber, String indexNumber, String name, String degreeProgram, int currentYear, int currentSemester, String email) {
+        super(name, email);
         this.studentId = studentId;
         this.registrationNumber = registrationNumber;
         this.indexNumber = indexNumber;
-        this.name = name;
         this.degreeProgram = degreeProgram;
         this.currentYear = currentYear;
         this.currentSemester = currentSemester;
-        this.email = email;
     }
 
     public String getStudentId() {
@@ -65,6 +64,7 @@ public class Student extends Person{
         this.indexNumber = indexNumber;
     }
 
+    @Override
     public void setName(String name) {
         this.name = name;
     }
@@ -81,6 +81,7 @@ public class Student extends Person{
         this.currentSemester = currentSemester;
     }
 
+    @Override
     public void setEmail(String email) {
         this.email = email;
     }
