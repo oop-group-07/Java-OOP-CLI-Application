@@ -1,0 +1,114 @@
+[33mcommit 16a6c650eab015bf0eb8ca9295a1761f333fc3de[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mfeature/result-management[m[33m)[m
+Author: yasu werel <yasuwerel@gmail.com>
+Date:   Sun Jun 28 22:24:30 2026 +0530
+
+    remove unnecessary code
+
+[33mcommit f4f720f7c4bdfe71188100687317b81a0efbe1a1[m
+Author: yasu werel <yasuwerel@gmail.com>
+Date:   Sun Jun 28 22:12:46 2026 +0530
+
+    add result management features
+
+[33mcommit 443566d06b6f5d8bde1f4fa3156d646947abc6fb[m[33m ([m[1;31morigin/develop[m[33m)[m
+Merge: 6f0e4c5 928c73f
+Author: P.L. PASIDU BINUSH <pasidubinush1@gmail.com>
+Date:   Sat Jun 27 20:42:33 2026 +0530
+
+    Merge pull request #3 from Weruniranasinghe/feature/course-add-search
+    
+    Implement course add, view, and search features
+
+[33mcommit 928c73f9179fc21e8273a51c9192e1fb5dc171b6[m
+Merge: 0584486 6f0e4c5
+Author: P.L. PASIDU BINUSH <pasidubinush1@gmail.com>
+Date:   Sat Jun 27 20:40:43 2026 +0530
+
+    Merge branch 'develop' into feature/course-add-search
+
+[33mcommit 058448680b24f67d06176a3a5bc04ccbd85f7d8e[m
+Author: Weruniranasinghe <weruniranasinghe@gmail.com>
+Date:   Sat Jun 27 20:05:39 2026 +0530
+
+    course feature
+
+[33mcommit 6f0e4c5d09829a20ea8fe83270076aa804942294[m
+Merge: 9ee126f 4badc3d
+Author: P.L. PASIDU BINUSH <pasidubinush1@gmail.com>
+Date:   Sat Jun 27 15:30:53 2026 +0530
+
+    Merge pull request #2 from shalin-malshan/feature/student-add-view-search
+    
+    Implement student add, view, and search features
+
+[33mcommit 4badc3df77d8197c54412d5f4bb8bee6a66f0bb8[m
+Author: shalin malshan <shalinmalshan2003@gmail.com>
+Date:   Sat Jun 27 15:00:19 2026 +0530
+
+    complete person classs ✏️
+
+[33mcommit 247a3f822e18355759f92c37e04956cc6c6a4486[m
+Author: shalin malshan <shalinmalshan2003@gmail.com>
+Date:   Sat Jun 27 10:12:57 2026 +0530
+
+    remove unnecessary codes 🧹🧹
+
+[33mcommit 2cca43c92803f22e2d7ea9cb2d5971e8c380d2c5[m
+Author: shalin malshan <shalinmalshan2003@gmail.com>
+Date:   Sat Jun 27 10:09:16 2026 +0530
+
+    Create Student add, view all and getStudentById ✅✅
+
+[33mcommit 8fc3014155957272e9f88336a15a42d893432f10[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m
+Author: PBinush <pasidbinush@gmail.com>
+Date:   Fri Jun 26 07:38:19 2026 +0530
+
+    Convert Person to abstract class and implement inheritance in Student
+
+[33mcommit 586906fc772a43c5d1f89d3fedc37a3ac1bbc566[m
+Author: P.L. PASIDU BINUSH <pasidbinush@gmail.com>
+Date:   Thu Jun 25 17:43:51 2026 +0530
+
+    Update README.md
+
+[33mcommit f7619999051a8241e0f31b9c78b0eb72af5cbf4b[m
+Author: PBinush <pasidbinush@gmail.com>
+Date:   Thu Jun 25 17:42:04 2026 +0530
+
+    update file stucture - 3
+
+[33mcommit 1dc417a6e67b5528f8124994928f4ca4d09fa6dd[m
+Author: PBinush <pasidbinush@gmail.com>
+Date:   Thu Jun 25 09:36:03 2026 +0530
+
+    update file stucture
+
+[33mcommit a6976fe63129e69e40ff293e3f183fa5de175e03[m
+Author: PBinush <pasidbinush@gmail.com>
+Date:   Wed Jun 24 09:48:18 2026 +0530
+
+    update structure
+
+[33mcommit 742500e76c55c39ac4a5cfa6e917ceff103ffb12[m
+Author: PBinush <pasidbinush@gmail.com>
+Date:   Wed Jun 24 09:44:20 2026 +0530
+
+    Initial project upload
+
+[33mcommit be931c06234836fc6295ce8faf0e18de2daa2e39[m
+Author: P.L. PASIDU BINUSH <pasidbinush@gmail.com>
+Date:   Wed Jun 24 09:34:35 2026 +0530
+
+    Update README.md
+
+[33mcommit 9ee126fd14557cf1ae4ab54c4b6cd49734406787[m[33m ([m[1;31morigin/feature/student-update-delete[m[33m, [m[1;31morigin/feature/student-add-search[m[33m, [m[1;31morigin/feature/result-management[m[33m, [m[1;31morigin/feature/report-generation[m[33m, [m[1;31morigin/feature/gpa-calculation[m[33m, [m[1;31morigin/feature/file-handling-menu[m[33m, [m[1;31morigin/feature/course-update-delete[m[33m, [m[1;31morigin/feature/course-add-search[m[33m)[m
+Author: P.L. PASIDU BINUSH <pasidbinush@gmail.com>
+Date:   Tue Jun 23 07:16:25 2026 +0530
+
+    Update README.md
+
+[33mcommit 934176ecb9f36bb8ad7717f2e42c9dce550f50a5[m
+Author: P.L. PASIDU BINUSH <pasidbinush@gmail.com>
+Date:   Tue Jun 23 07:15:48 2026 +0530
+
+    Initial commit
