@@ -1,9 +1,11 @@
 package edu.repository;
-import edu.model.Course;
 import java.util.ArrayList;
+
+import edu.model.Course;
 
 public class CourseRepository {
     private ArrayList<Course> courses = new ArrayList<>();
+
 
     //add course
     public void addCourse(Course course) {
@@ -24,4 +26,21 @@ public class CourseRepository {
         }
         return null;
     }
+    
+    //update course details
+    public boolean updateCourse(Course existing, Course updatedCourse){
+
+    existing.setCourseName(updatedCourse.getCourseName());
+    existing.setCredits(updatedCourse.getCredits());
+    existing.setAcademicYear(updatedCourse.getAcademicYear());
+    existing.setSemester(updatedCourse.getSemester());
+
+    return true;
+}
+
+    //delete course
+    public boolean deleteCourse(Course course){
+        return courses.remove(course);
+    }    
+        
 }
