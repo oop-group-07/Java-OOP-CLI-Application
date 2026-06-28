@@ -93,4 +93,77 @@ public class CourseService {
         System.out.println("Error while searching for the course:"+ e.getMessage());
     }
     }
+
+    //update courses
+    public boolean updateCourse(String courseCode, Course updatedCourse) {
+        try {
+            Course existing = repository.findByCode(courseCode);
+            if (existing == null) {
+                System.out.println("Course not found!");
+                return false;
+            }
+
+            //validations
+            //course name must not contain numeric characters
+            if (updatedCourse.getCourseName().matches(".*\\d.*")) {
+                System.out.println("Invalid course name!");
+                return false;
+            }
+
+            //credits must be a positive value
+            if (updatedCourse.getCredits() <= 0) {
+                System.out.println("Invalid credits!");
+                return false;
+            }
+
+            //acedemic year must be between 1 and 4
+            if (updatedCourse.getAcademicYear() < 1 || updatedCourse.getAcademicYear() > 4) {
+                System.out.println("Invalid academic year!");
+                return false;
+            }
+
+            //semester must be either 1 or 2
+            if (updatedCourse.getSemester() != 1 && updatedCourse.getSemester() != 2) {
+                System.out.println("Invalid semester!");
+                return false;
+            }
+
+            //update logic
+            existing.setCourseName(updatedCourse.getCourseName());
+            existing.setCredits(updatedCourse.getCredits());
+            existing.setAcademicYear(updatedCourse.getAcademicYear());
+            existing.setSemester(updatedCourse.getSemester());
+
+            System.out.println("Course updated successfully!");
+            return true;
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+            return false;
+        }
+    }
+
+    //delete course by course code
+    public boolean deleteCourse(String courseCode) {
+        try {
+            //search for the course using the course code 
+            Course existing = repository.findByCode(courseCode);
+            if (existing == null) {
+                System.out.println("Course not found!");
+                return false;
+            }
+
+            //delete course from repository
+            boolean result = repository.deleteCourse(existing);
+
+            if (result) {
+                System.out.println("Course deleted successfully!");
+            }
+            return result;
+
+        } catch (Exception e) {
+            System.out.println("Error while deleting the course: " + e.getMessage());
+            return false;
+        }
+    }
 }
+
