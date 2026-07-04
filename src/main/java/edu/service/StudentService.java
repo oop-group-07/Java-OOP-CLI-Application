@@ -15,7 +15,7 @@ public class StudentService {
     public void checkAddStudent() {
         try {
 
-            //get student information from user input
+            // get student information from user input
             System.out.println("Please provide the following information:");
 
             System.out.println("Student ID : ");
@@ -50,14 +50,15 @@ public class StudentService {
             String regexEmail = "^[A-Za-z0-9+_.-]+@(.+)$";
 
             // Validate student ID, registration number, and index number
-            if (!(studentId.equals(registrationNumber) && studentId.equals(indexNumber) && !studentId.isEmpty() && studentId.matches(regexId))) {
+            if (!(studentId.equals(registrationNumber) && studentId.equals(indexNumber) && !studentId.isEmpty()
+                    && studentId.matches(regexId))) {
                 System.out.println("Invalid student information provided.");
-                scanner.nextLine(); 
+                scanner.nextLine();
                 return;
             }
 
             // Check if the student already exists in the repository
-            if(studentRepo.getStudentById(studentId) != null) {
+            if (studentRepo.getStudentById(studentId) != null) {
                 System.out.println("Student with ID " + studentId + " already exists.");
                 return;
             }
@@ -68,7 +69,7 @@ public class StudentService {
                 return;
             }
 
-            //validate current year and semester
+            // validate current year and semester
             if (currentYear < 1 || currentYear > 4) {
                 System.out.println("Invalid current year. It should be between 1 and 4.");
                 return;
@@ -80,15 +81,15 @@ public class StudentService {
             }
 
             // Create a new Student object and add it to the repository
-            Student student = new Student(studentId, registrationNumber, indexNumber, name, degreeProgram, currentYear, currentSemester, email);
+            Student student = new Student(studentId, registrationNumber, indexNumber, name, degreeProgram, currentYear,
+                    currentSemester, email);
 
             // Add the student to the repository
             studentRepo.addStudent(student);
 
-
         } catch (InputMismatchException e) {
             System.out.println("Error: " + e);
-        }catch (Exception e) {
+        } catch (Exception e) {
             System.out.println("Error: " + e);
         }
 
@@ -108,7 +109,6 @@ public class StudentService {
             System.out.println("---------------------------");
         }
     }
-
 
     // Method to get a student by ID
     public void getStudentById() {
@@ -132,6 +132,77 @@ public class StudentService {
             System.out.println("Email: " + student.getEmail());
         } else {
             System.out.println("Student with ID " + studentId + " not found.");
+        }
+    }
+
+    //update student 
+    public void updateStudent() {
+        try {
+
+            System.out.println("Enter Student ID to update: ");
+            String studentId = scanner.nextLine();
+
+            Student student = studentRepo.getStudentById(studentId);
+
+            if (student == null) {
+                System.out.println("Student not found.");
+                return;
+            }
+
+            System.out.println("Enter New Name: ");
+            String name = scanner.nextLine();
+
+            System.out.println("Enter New Degree Program: ");
+            String degreeProgram = scanner.nextLine();
+
+            System.out.println("Enter Current Year: ");
+            int currentYear = scanner.nextInt();
+            scanner.nextLine();
+
+            System.out.println("Enter Current Semester: ");
+            int currentSemester = scanner.nextInt();
+            scanner.nextLine();
+
+            System.out.println("Enter New Email: ");
+            String email = scanner.nextLine();
+
+            student.setName(name);
+            student.setDegreeProgram(degreeProgram);
+            student.setCurrentYear(currentYear);
+            student.setCurrentSemester(currentSemester);
+            student.setEmail(email);
+
+            boolean updated = studentRepo.updateStudent(student);
+
+            if (updated) {
+                System.out.println("Student updated successfully.");
+            } else {
+                System.out.println("Update failed.");
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+    }
+
+    // Method to delete student
+    public void deleteStudent() {
+
+        try {
+
+            System.out.println("Enter Student ID to delete: ");
+            String studentId = scanner.nextLine();
+
+            boolean deleted = studentRepo.deleteStudent(studentId);
+
+            if (deleted) {
+                System.out.println("Student deleted successfully.");
+            } else {
+                System.out.println("Student not found.");
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
         }
     }
 }

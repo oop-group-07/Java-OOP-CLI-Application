@@ -12,7 +12,8 @@ public class StudentRepo {
 
     private final ArrayList<Student> students = new ArrayList<>();
 
-    private static final String filePath = "Java-OOP-CLI-Application/src/main/java/edu/file/students.txt";  // Path to the file
+    private static final String filePath = "Java-OOP-CLI-Application/src/main/java/edu/file/students.txt"; // Path to
+                                                                                                           // the file
 
     public StudentRepo() {
         loadStudentsFromFile(); // Load students from file when the repository is initialized
@@ -43,8 +44,7 @@ public class StudentRepo {
                             parts[4],
                             Integer.parseInt(parts[5]),
                             Integer.parseInt(parts[6]),
-                            parts[7]
-                    );
+                            parts[7]);
 
                     students.add(student);
                 }
@@ -59,7 +59,6 @@ public class StudentRepo {
 
         File file = new File(filePath);
         file.getParentFile().mkdirs();
-
 
         try (BufferedWriter writer = new BufferedWriter(new java.io.FileWriter(filePath))) {
             for (Student student : students) {
@@ -107,4 +106,40 @@ public class StudentRepo {
         students.add(student);
         saveStudentsToFile();
     }
+
+    // update student
+    public boolean updateStudent(Student updatedStudent) {
+        for (int i = 0; i < students.size(); i++) {
+
+            if (students.get(i).getStudentId()
+                    .equals(updatedStudent.getStudentId())) {
+
+                students.set(i, updatedStudent);
+
+                saveStudentsToFile();
+
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    // Method to delete student
+    public boolean deleteStudent(String studentId) {
+
+        Student student = getStudentById(studentId);
+
+        if (student != null) {
+
+            students.remove(student);
+
+            saveStudentsToFile();
+
+            return true;
+        }
+
+        return false;
+    }
+
 }
