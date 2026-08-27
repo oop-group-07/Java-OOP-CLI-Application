@@ -6,15 +6,17 @@ import edu.service.CourseService;
 import edu.service.ReportService;
 import edu.service.ResultService;
 import edu.service.StudentService;
-
 public class MainMenu {
-
+    // Scanner is used to get input from the user
     private final Scanner scanner;
+
+    // Handle Business Logics
     private final CourseService courseService;
     private final ResultService resultService;
     private final StudentService studentService;
     private final ReportService reportService;
 
+    // Constructer Using Dependency Injection
     public MainMenu(
             StudentService studentService,
             CourseService courseService,
@@ -33,8 +35,8 @@ public class MainMenu {
     public void start() {
         int choice = 0;
 
+        // Continue displaying the menu until the user selects Exit
         do {
-
             System.out.println("\n==============================================");
             System.out.println("       UNIVERSITY STUDENT MANAGEMENT SYSTEM");
             System.out.println("==============================================");
@@ -49,17 +51,19 @@ public class MainMenu {
             System.out.println("8.  Update Course");
             System.out.println("9.  Delete Course");
             System.out.println("10. Add Marks for a Student");
-            System.out.println("11. Calculate GPA");
+            System.out.println("11. Update Marks for a Student");
             System.out.println("12. Generate Student Report");
             System.out.println("13. Exit");
 
-            System.out.println("----------------------------------------------");
+            System.out.println("----------------------------------------------\n");
 
             try {
-
+                // Get the user's menu choice
                 System.out.print("Enter your choice: ");
                 choice = Integer.parseInt(scanner.nextLine());
+                System.out.println("");
 
+                // Execute the relevant service method based on the user's choice
                 switch (choice) {
 
                     case 1:
@@ -91,23 +95,23 @@ public class MainMenu {
                         break;
 
                     case 8:
-                        //courseService.updateCourse();
+                        courseService.updateCourse();
                         break;
 
                     case 9:
-                        //courseService.deleteCourse();
+                        courseService.deleteCourse();
                         break;
 
                     case 10: 
-                        //resultService.addMarks();
+                        resultService.addResult();
                         break;
 
                     case 11:
-                        //gpaCalculation.calculateGPA();
+                        //resultService.updateResult();
                         break;
 
                     case 12:
-                        //reportService.genarateReport();
+                        reportService.generateStudentReport();
                         break;
 
                     case 13:
