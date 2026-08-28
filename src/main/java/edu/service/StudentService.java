@@ -1,49 +1,55 @@
 package edu.service;
 
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import edu.file.FileManager;
 import edu.model.Student;
 import edu.repository.StudentRepo;
 
 public class StudentService {
 
     Scanner scanner = new Scanner(System.in);
-    StudentRepo studentRepo = new StudentRepo();
+    private final StudentRepo studentRepo;
+
+    public StudentService(StudentRepo studentRepo){
+        this.studentRepo = studentRepo;
+    }
 
     // Method to validate and add a new student
-    public void checkAddStudent() {
+    public void AddStudent() {
         try {
 
             // get student information from user input
-            System.out.println("Please provide the following information:");
+            System.out.println("\nPlease provide the following information:\n");
 
-            System.out.println("Student ID : ");
+            System.out.print("Student ID : ");
             String studentId = scanner.nextLine();
 
-            System.out.println("Registration Number : ");
+            System.out.print("Registration Number : ");
             String registrationNumber = scanner.nextLine();
 
-            System.out.println("Index Number : ");
+            System.out.print("Index Number : ");
             String indexNumber = scanner.nextLine();
 
-            System.out.println("Name : ");
+            System.out.print("Name : ");
             String name = scanner.nextLine();
 
-            System.out.println("Degree Program : ");
+            System.out.print("Degree Program : ");
             String degreeProgram = scanner.nextLine();
 
-            System.out.println("Current Year : ");
+            System.out.print("Current Year : ");
             int currentYear = scanner.nextInt();
 
             scanner.nextLine();
 
-            System.out.println("Current Semester : ");
+            System.out.print("Current Semester : ");
             int currentSemester = scanner.nextInt();
 
             scanner.nextLine();
 
-            System.out.println("Email : ");
+            System.out.print("Email : ");
             String email = scanner.nextLine();
 
             String regexId = "23APP\\d{4}";
@@ -88,11 +94,10 @@ public class StudentService {
             studentRepo.addStudent(student);
 
         } catch (InputMismatchException e) {
-            System.out.println("Error: " + e);
+            System.out.println("\nError: " + e);
         } catch (Exception e) {
-            System.out.println("Error: " + e);
+            System.out.println("\nError: " + e);
         }
-
     }
 
     // Method to view all students
@@ -114,7 +119,7 @@ public class StudentService {
     public void getStudentById() {
 
         // Get student ID from user input
-        System.out.println("Enter student ID: ");
+        System.out.print("Enter student ID: ");
         String studentId = scanner.nextLine();
 
         // Search for the student in the repository
@@ -122,7 +127,7 @@ public class StudentService {
 
         // Display the student information
         if (student != null) {
-            System.out.println("Student ID: " + student.getStudentId());
+            System.out.println("\nStudent ID: " + student.getStudentId());
             System.out.println("Registration Number: " + student.getRegistrationNumber());
             System.out.println("Index Number: " + student.getIndexNumber());
             System.out.println("Name: " + student.getName());
@@ -131,7 +136,7 @@ public class StudentService {
             System.out.println("Current Semester: " + student.getCurrentSemester());
             System.out.println("Email: " + student.getEmail());
         } else {
-            System.out.println("Student with ID " + studentId + " not found.");
+            System.out.println("\nStudent with ID " + studentId + " not found.");
         }
     }
 
@@ -139,7 +144,7 @@ public class StudentService {
     public void updateStudent() {
         try {
 
-            System.out.println("Enter Student ID to update: ");
+            System.out.print("Enter Student ID to update: ");
             String studentId = scanner.nextLine();
 
             Student student = studentRepo.getStudentById(studentId);
@@ -149,21 +154,21 @@ public class StudentService {
                 return;
             }
 
-            System.out.println("Enter New Name: ");
+            System.out.print("Enter New Name: ");
             String name = scanner.nextLine();
 
-            System.out.println("Enter New Degree Program: ");
+            System.out.print("Enter New Degree Program: ");
             String degreeProgram = scanner.nextLine();
 
-            System.out.println("Enter Current Year: ");
+            System.out.print("Enter Current Year: ");
             int currentYear = scanner.nextInt();
             scanner.nextLine();
 
-            System.out.println("Enter Current Semester: ");
+            System.out.print("Enter Current Semester: ");
             int currentSemester = scanner.nextInt();
             scanner.nextLine();
 
-            System.out.println("Enter New Email: ");
+            System.out.print("Enter New Email: ");
             String email = scanner.nextLine();
 
             student.setName(name);
@@ -175,13 +180,13 @@ public class StudentService {
             boolean updated = studentRepo.updateStudent(student);
 
             if (updated) {
-                System.out.println("Student updated successfully.");
+                System.out.println("\nStudent updated successfully.");
             } else {
-                System.out.println("Update failed.");
+                System.out.println("\nUpdate failed.");
             }
 
         } catch (Exception e) {
-            System.out.println("Error: " + e);
+            System.out.println("\nError: " + e);
         }
     }
 
@@ -190,19 +195,25 @@ public class StudentService {
 
         try {
 
-            System.out.println("Enter Student ID to delete: ");
+            System.out.print("Enter Student ID to delete: ");
             String studentId = scanner.nextLine();
 
             boolean deleted = studentRepo.deleteStudent(studentId);
 
             if (deleted) {
-                System.out.println("Student deleted successfully.");
+                System.out.println("\nStudent deleted successfully.");
             } else {
-                System.out.println("Student not found.");
+                System.out.println("\nStudent not found.");
             }
 
         } catch (Exception e) {
-            System.out.println("Error: " + e);
+            System.out.println("\nError: " + e);
         }
+    }
+
+    // Load students from file to ArrayList
+    public void loadStudents() {
+        ArrayList<Student> loadedStudents = FileManager.retriveStudentData();
+        studentRepo.loadStudents(loadedStudents);
     }
 }
