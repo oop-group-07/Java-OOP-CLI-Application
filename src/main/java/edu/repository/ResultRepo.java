@@ -12,32 +12,23 @@ public class ResultRepo {
         resultList.add(result);
     }
 
-    public ArrayList<Results> getAllResults() {
-        return resultList;
-    }
-
-    public Results searchResult(String studentID,
-                                         String courseCode,
-                                         int academicYear,
-                                         int semester) {
+    public ArrayList<Results> searchResult(String studentID) {
+        ArrayList<Results> resultListByStdID = new ArrayList<>();
 
         for (Results result : resultList) {
-            if (result.getStudentID().equals(studentID)
-                    && result.getCourseCode().equals(courseCode)
-                    && result.getAcademicYear() == academicYear
-                    && result.getSemester() == semester) {
-
-                return result;
+            if (result.getStudentID().equals(studentID)) {
+                resultListByStdID.add(result);
             }
         }
 
-        return null;
+        return resultListByStdID;
     }
-            //check duplicate result
-            public boolean isDuplicate(String studentID, String courseCode, int academicYear, int semester) {
-                
-               return searchResult(studentID, courseCode, academicYear, semester) != null;
-            }
-        }
+
+    // Load Results Details form the file to arraylist
+    public void loadResults(ArrayList<Results> results) {
+        this.resultList.clear();
+        this.resultList.addAll(results);
+    }
+}
 
        
