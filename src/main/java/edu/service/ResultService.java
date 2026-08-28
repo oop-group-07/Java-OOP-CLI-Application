@@ -1,13 +1,19 @@
 package edu.service;
 
+import java.util.ArrayList;
+import java.util.Scanner;
+
+import edu.file.FileManager;
 import edu.model.Course;
 import edu.model.Results;
+import edu.model.Student;
 import edu.repository.CourseRepository;
 import edu.repository.ResultRepo;
 import edu.repository.StudentRepo;
 
 public class ResultService {
 
+    private final Scanner scanner = new Scanner(System.in);
     private final ResultRepo resultRepo;
     private final StudentRepo studentRepo;
     private final CourseRepository courseRepo;
@@ -18,7 +24,16 @@ public class ResultService {
         this.courseRepo = courseRepo;
     }
 
-    public  void addResult(String studentID, String courseCode, double marks) {
+    public  void addResult() {
+
+            System.out.print("Enter Student ID: ");
+            String studentID = scanner.nextLine();
+
+            System.out.print("Enter Course ID: ");
+            String courseCode = scanner.nextLine();
+
+            System.out.print("Enter Marks: ");
+            double marks = scanner.nextDouble();
        
             try{
 
@@ -31,11 +46,6 @@ public class ResultService {
                 Course course = courseRepo.findByCode(courseCode);
                 if(course == null){
                     throw new IllegalArgumentException("Course with code " + courseCode + " does not exist.");
-                }
-
-                //duplicate result validation
-                if(resultRepo.isDuplicate(studentID, courseCode, course.getAcademicYear(), course.getSemester())){
-                    throw new IllegalArgumentException("Result for student " + studentID + " and course " + courseCode + " already exists.");
                 }
 
                 //marks validation
@@ -85,41 +95,15 @@ public class ResultService {
                 System.out.println("Semester: " + course.getSemester());
 
             } catch (IllegalArgumentException e) {
-                System.out.println("Error: " + e.getMessage());
+                System.out.println("\nError: " + e.getMessage());
             } catch (Exception e) {
-                System.out.println("Error: " + e.getMessage());
+                System.out.println("\nError: " + e.getMessage());
             }
         }
-    //view results
 
-    public void viewAllResults(){
-        if(resultRepo.getAllResults().isEmpty()){
-            System.out.println("No results available.");
-            return;
-        }
-        System.out.println("\n ===============RESULT LIST===============");
-        System.out.println("Student ID\tCourse Code\tAcademic Year\tSemester\tMarks\tGrade\tGrade Point");
-        
-        for(Results result : resultRepo.getAllResults()){
-            System.out.println(result.getStudentID() + "\t" + result.getCourseCode() + "\t" + result.getAcademicYear() + "\t" + result.getSemester() + "\t" + result.getMarks() + "\t" + result.getGrade() + "\t" + result.getGradePoint());
-        }
+    // Load results from file to ArrayList
+    public void loadResults() {
+        ArrayList<Results> loadedResults = FileManager.retrieveResults();
+        resultRepo.loadResults(loadedResults);
     }
-
-    //Search result
-
-    public void searchResult(String studentId, String courseCode){
-        Results result = resultRepo.searchResult(studentId, courseCode, 0, 0);
-        if(result == null){
-            System.out.println("No result found for student ID " + studentId + " and course code " + courseCode);
-            return;
-        }
-        System.out.println("\n ===============RESULT DETAILS===============");
-        System.out.println("Student ID: " + result.getStudentID());
-        System.out.println("Course Code: " + result.getCourseCode());
-        System.out.println("Academic Year: " + result.getAcademicYear());
-        System.out.println("Semester: " + result.getSemester());
-        System.out.println("Marks: " + result.getMarks());
-        System.out.println("Grade: " + result.getGrade());
-        System.out.println("Grade Point: " + result.getGradePoint());
-    }
-    }
+}
