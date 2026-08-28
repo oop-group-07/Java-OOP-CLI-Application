@@ -15,9 +15,11 @@ public class Student extends Person{
         this.studentId = studentId;
         this.registrationNumber = registrationNumber;
         this.indexNumber = indexNumber;
+        this.name = name;
         this.degreeProgram = degreeProgram;
         this.currentYear = currentYear;
         this.currentSemester = currentSemester;
+        this.email = email;
     }
 
     public String getStudentId() {
