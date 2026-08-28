@@ -1,5 +1,6 @@
 package edu.repository;
 import edu.model.Course;
+
 import java.util.ArrayList;
 
 public class CourseRepository {
@@ -40,5 +41,10 @@ public class CourseRepository {
         return courses.remove(course);
     }    
         
+    // Load Course Details form the file to arraylist
+    public void loadCourse(ArrayList<Course> courses) {
+        this.courses.clear();
+        this.courses.addAll(courses);
+    }
 }
 

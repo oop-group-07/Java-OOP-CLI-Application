@@ -1,65 +1,118 @@
 package edu.service;
+import java.util.ArrayList;
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
+import edu.file.FileManager;
 import edu.model.Course;
 import edu.repository.CourseRepository;
-import java.util.ArrayList;
 
 public class CourseService {
     private CourseRepository repository; 
+    Scanner scanner = new Scanner(System.in);
 
     //Connect repository using constructor injection
     public CourseService(CourseRepository repository) {
         this.repository = repository;
     }
 
-    //add course with validation
-    public boolean addCourse(Course course) {
-        try{
-        //Check if Course Code already exists (Duplicate Check)
-        if(repository.findByCode(course.getCourseCode()) !=null){
-            System.out.println("Error : Course Code'"+ course.getCourseCode() +"'already exists!");
-            return false;
-        }
-        //
-        if(!course.getCourseCode().matches("^(?=.*[a-zA-Z])(?=.*\\d).+$")) {
-            System.out.println("Error : Course code must contain both Letters ans Numbers!");
-            return false;
-        }
+    public void addCourse() {
 
-        //Check if Course Name contains numbers
-        if (course.getCourseName().matches(".*\\d.*")) {
-            System.out.println("Error :Course name cannot contain numbers!");
-            return false;
-        }
+        try {
 
-        //Check if credit value is greater than 0
-        if(course.getCredits() <= 0){
-            System.out.println("Error : Credit must be greater than 0!");
-            return false;
-        }
-        //Check if academic year is between 1 and 4
-        if(course.getAcademicYear() < 1 || course.getAcademicYear() > 4){
-            System.out.println("Error : Academic year must between 1 and 4!");
-            return false;
-        }
-        //Check if Semester is 1 or 2
-        if(course.getSemester() !=1 && course.getSemester() !=2){
-            System.out.println("Error : Semester must be 1 or 2!");
-            return false;
-        }
-        // If all validations pass, save course to repository and return true
-        repository.addCourse(course);
-        System.out.println("Course added successfully!");
-        return true;
+            // Get course information from user
+            System.out.println("\n===== ADD COURSE =====");
 
-        }catch (NullPointerException e){
-            System.out.println("Error: A null pointer exception occurred while adding the course. Check if data is missing.");
-            return false;
+            System.out.print("Course Code: ");
+            String courseCode = scanner.nextLine();
 
-        }catch (Exception e){
-            System.out.println("An unexpected error occurred:"+ e.getMessage());
-            return false;
+            System.out.print("Course Name: ");
+            String courseName = scanner.nextLine();
+
+            System.out.print("Credits: ");
+            int credits = scanner.nextInt();
+
+            System.out.print("Academic Year: ");
+            int academicYear = scanner.nextInt();
+
+            System.out.print("Semester: ");
+            int semester = scanner.nextInt();
+
+            scanner.nextLine();
+
+            // Duplicate course code validation
+            if (repository.findByCode(courseCode) != null) {
+                System.out.println(
+                        "Error: Course Code '" + courseCode + "' already exists!"
+                );
+                return;
+            }
+
+            // Course code validation
+            if (!courseCode.matches("^(?=.*[a-zA-Z])(?=.*\\d).+$")) {
+                System.out.println(
+                        "Error: Course code must contain both letters and numbers!"
+                );
+                return;
+            }
+
+            // Course name validation
+            if (courseName.matches(".*\\d.*")) {
+                System.out.println(
+                        "Error: Course name cannot contain numbers!"
+                );
+                return;
+            }
+
+            // Credit validation
+            if (credits <= 0) {
+                System.out.println(
+                        "Error: Credit must be greater than 0!"
+                );
+                return;
+            }
+
+            // Academic year validation
+            if (academicYear < 1 || academicYear > 4) {
+                System.out.println(
+                        "Error: Academic year must be between 1 and 4!"
+                );
+                return;
+            }
+
+            // Semester validation
+            if (semester != 1 && semester != 2) {
+                System.out.println(
+                        "Error: Semester must be 1 or 2!"
+                );
+                return;
+            }
+
+            // Create Course object
+            Course course = new Course(
+                    courseCode,
+                    courseName,
+                    credits,
+                    academicYear,
+                    semester
+            );
+
+            // Add course to repository
+            repository.addCourse(course);
+
+            System.out.println("\nCourse added successfully!");
+
+        } catch (InputMismatchException e) {
+
+            System.out.println("\nError: Please enter valid input.");
+
+            // Clear invalid input
+            scanner.nextLine();
+
+        } catch (Exception e) {
+
+            System.out.println("\nError: " + e.getMessage());
         }
-
     }
 
     //view all courses
@@ -75,27 +128,115 @@ public class CourseService {
             System.out.println(c);
         }
     }catch (Exception e){
-        System.out.println("Error while retrieving courses: "+ e.getMessage());
+        System.out.println("\nError while retrieving courses: "+ e.getMessage());
     }
     }
 
     //search course by course code
-    public void searchCourse(String courseCode){
+    public void searchCourse(){
+
+        System.out.print("Course Code: ");
+        String courseCode = scanner.nextLine();
+
+        // Duplicate course code validation
+            if (repository.findByCode(courseCode) != null) {
+                System.out.println(
+                        "Error: Course Code '" + courseCode + "' already exists!"
+                );
+                return;
+            }
+
+            // Course code validation
+            if (!courseCode.matches("^(?=.*[a-zA-Z])(?=.*\\d).+$")) {
+                System.out.println(
+                        "Error: Course code must contain both letters and numbers!"
+                );
+                return;
+            }
+
         try{
         Course course = repository.findByCode(courseCode);
         if (course != null) {
             System.out.println("\n--- Course Found ---");
             System.out.println(course);
         }else{
-            System.out.println("Course not found with Code: " + courseCode);
+            System.out.println("\nCourse not found with Code: " + courseCode);
         }
     }catch (Exception e){
-        System.out.println("Error while searching for the course:"+ e.getMessage());
+        System.out.println("\nError while searching for the course:"+ e.getMessage());
     }
     }
 
     //update courses
-    public boolean updateCourse(String courseCode, Course updatedCourse) {
+    public boolean updateCourse() {
+        System.out.print("Course Code: ");
+        String courseCode = scanner.nextLine();
+        
+        System.out.print("Course Name: ");
+        String courseName = scanner.nextLine();
+
+        System.out.print("Credits: ");
+        int credits = scanner.nextInt();
+
+        System.out.print("Academic Year: ");
+        int academicYear = scanner.nextInt();
+
+        System.out.print("Semester: ");
+        int semester = scanner.nextInt();
+
+        scanner.nextLine();
+
+        // Duplicate course code validation
+        if (repository.findByCode(courseCode) != null) {
+            System.out.println(
+                    "Error: Course Code '" + courseCode + "' already exists!"
+            );
+        }
+
+        // Course code validation
+        if (!courseCode.matches("^(?=.*[a-zA-Z])(?=.*\\d).+$")) {
+            System.out.println(
+                    "Error: Course code must contain both letters and numbers!"
+            );
+        }
+
+        // Course name validation
+        if (courseName.matches(".*\\d.*")) {
+            System.out.println(
+                    "Error: Course name cannot contain numbers!"
+            );
+        }
+
+        // Credit validation
+            if (credits <= 0) {
+            System.out.println(
+                     "Error: Credit must be greater than 0!"
+            );
+        }
+
+        // Academic year validation
+        if (academicYear < 1 || academicYear > 4) {
+            System.out.println(
+                     "Error: Academic year must be between 1 and 4!"
+            );
+        }
+
+        // Semester validation
+        if (semester != 1 && semester != 2) {
+            System.out.println(
+                "Error: Semester must be 1 or 2!"
+            );
+        }
+
+        // Create Course object
+        Course updatedCourse = new Course(
+                courseCode,
+                courseName,
+                credits,
+                academicYear,
+                semester
+        );
+
         try {
             Course existing = repository.findByCode(courseCode);
             if (existing == null) {
@@ -134,21 +275,23 @@ public class CourseService {
             existing.setAcademicYear(updatedCourse.getAcademicYear());
             existing.setSemester(updatedCourse.getSemester());
 
-            System.out.println("Course updated successfully!");
+            System.out.println("\nCourse updated successfully!");
             return true;
         } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
+            System.out.println("\nError: " + e.getMessage());
             return false;
         }
     }
 
     //delete course by course code
-    public boolean deleteCourse(String courseCode) {
+    public boolean deleteCourse() {
         try {
+            System.out.print("Enter Course ID to delete: ");
+            String courseCode = scanner.nextLine();
             //search for the course using the course code 
             Course existing = repository.findByCode(courseCode);
             if (existing == null) {
-                System.out.println("Course not found!");
+                System.out.println("\nCourse not found!");
                 return false;
             }
 
@@ -156,14 +299,19 @@ public class CourseService {
             boolean result = repository.deleteCourse(existing);
 
             if (result) {
-                System.out.println("Course deleted successfully!");
+                System.out.println("\nCourse deleted successfully!");
             }
             return result;
 
         } catch (Exception e) {
-            System.out.println("Error while deleting the course: " + e.getMessage());
+            System.out.println("\nError while deleting the course: " + e.getMessage());
             return false;
         }
     }
-}
 
+    // Load courses from file to ArrayList
+    public void loadCourses() {
+        ArrayList<Course> loadedCourses = FileManager.retrieveCourseData();
+        repository.loadCourse(loadedCourses);
+    }
+}
