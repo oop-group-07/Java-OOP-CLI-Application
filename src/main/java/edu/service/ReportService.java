@@ -1,16 +1,34 @@
 package edu.service;
 
-import edu.model.Student;
+import java.util.ArrayList;
+import java.util.Scanner;
+
 import edu.model.Course;
 import edu.model.Results;
-import java.util.List;
+import edu.model.Student;
+import edu.repository.CourseRepository;
+import edu.repository.ResultRepo;
+import edu.repository.StudentRepo;
 
-public class ReportService implements Reportable {
 
-    @Override
-    public void generateStudentReport(Student student, List<Results> resultList, List<Course> courseList) {
-        
-       
+public class ReportService{
+    private StudentRepo studentRepo;
+    private ResultRepo resultRepo;
+    private CourseRepository courseRepo;
+    private final Scanner scanner = new Scanner(System.in);
+
+    public ReportService(StudentRepo studentRepo,ResultRepo resultRepo,CourseRepository courseRepo){
+        this.studentRepo = studentRepo;
+        this.resultRepo = resultRepo;
+        this.courseRepo = courseRepo;
+    }
+
+    public void generateStudentReport() {
+        System.out.println("Enter Student ID: ");
+        String studentId = scanner.nextLine();
+
+        Student student = studentRepo.getStudentById(studentId);
+
         System.out.println("\n=========================================");
         System.out.println("         STUDENT ACADEMIC REPORT         ");
         System.out.println("=========================================");
@@ -29,62 +47,33 @@ public class ReportService implements Reportable {
         double totalCreditWeightedPoints = 0;
         int totalCredits = 0;
 
+        ArrayList<Results> resultList = resultRepo.searchResult(studentId);
        
         for (Results res : resultList) {
-            if (res.getStudentId().equals(student.getStudentId())) {
-                
-               
-                String courseName = "Unknown Course";
-                int credits = 0;
-                
-                for (Course c : courseList) {
-                    if (c.getCourseCode().equals(res.getCourseCode())) {
-                        courseName = c.getCourseName();
-                        credits = c.getCredits();
-                        break;
-                    }
-                }
-
+            if (res.getStudentID().equals(student.getStudentId())) {
+                                
+                Course course = courseRepo.findByCode(res.getCourseCode());
                
                 System.out.printf("%-12s %-25s %-8d %-7.1f %-8s %-5.1f\n", 
                         res.getCourseCode(), 
-                        courseName, 
-                        credits, 
+                        course.getCourseName(), 
+                        course.getCredits(), 
                         res.getMarks(), 
                         res.getGrade(),
                         res.getGradePoint());
 
                 
-                totalCreditWeightedPoints += (res.getGradePoint() * credits);
-                totalCredits += credits;
+                totalCreditWeightedPoints += (res.getGradePoint() * course.getCredits());
+                totalCredits += course.getCredits();
             }
         }
 
         System.out.println("-----------------------------------------");
 
-        
-        double semesterGpa = 0.0;
-        if (totalCredits > 0) {
-            semesterGpa = totalCreditWeightedPoints / totalCredits;
-        }
-
-        
-        String academicStanding = "Academic Warning";
-        if (semesterGpa >= 3.70) {
-            academicStanding = "First Class";
-        } else if (semesterGpa >= 3.30) {
-            academicStanding = "Second Upper";
-        } else if (semesterGpa >= 3.00) {
-            academicStanding = "Second Lower";
-        } else if (semesterGpa >= 2.00) {
-            academicStanding = "General Pass";
-        }
-
-       
-        System.out.printf("Semester GPA     : %.2f\n", semesterGpa);
-        System.out.printf("Overall GPA      : %.2f\n", semesterGpa);
+        //System.out.printf("Semester GPA     : %.2f\n", semesterGpa);
+        //System.out.printf("Overall GPA      : %.2f\n", semesterGpa);
         System.out.println("Total Credits    : " + totalCredits);
-        System.out.println("Academic Standing: " + academicStanding);
+        //System.out.println("Academic Standing: " + academicStanding);
         System.out.println("=========================================");
     }
 }
