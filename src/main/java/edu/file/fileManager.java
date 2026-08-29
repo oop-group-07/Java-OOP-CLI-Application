@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import edu.model.Course;
 import edu.model.Results;
 import edu.model.Student;
-public class FileManager {
+public class fileManager {
 
     // --------------Student--------------------------------
     public static void storeStudentData(ArrayList<Student> students) {

@@ -9,15 +9,15 @@ import edu.model.Student;
 import edu.repository.CourseRepository;
 import edu.repository.ResultRepo;
 import edu.repository.StudentRepo;
+import edu.model.GPACalculator; // Aluth import eka
 
-
-public class ReportService{
+public class ReportService {
     private StudentRepo studentRepo;
     private ResultRepo resultRepo;
     private CourseRepository courseRepo;
     private final Scanner scanner = new Scanner(System.in);
 
-    public ReportService(StudentRepo studentRepo,ResultRepo resultRepo,CourseRepository courseRepo){
+    public ReportService(StudentRepo studentRepo, ResultRepo resultRepo, CourseRepository courseRepo) {
         this.studentRepo = studentRepo;
         this.resultRepo = resultRepo;
         this.courseRepo = courseRepo;
@@ -28,6 +28,12 @@ public class ReportService{
         String studentId = scanner.nextLine();
 
         Student student = studentRepo.getStudentById(studentId);
+        
+        // Error handling ekak damma student naththam crash wenna nathi wenna
+        if (student == null) {
+            System.out.println("Student not found!");
+            return;
+        }
 
         System.out.println("\n=========================================");
         System.out.println("         STUDENT ACADEMIC REPORT         ");
@@ -39,7 +45,6 @@ public class ReportService{
         System.out.println("Degree Program  : " + student.getDegreeProgram());
         System.out.println("Year " + student.getCurrentYear() + " Semester " + student.getCurrentSemester());
         System.out.println("-----------------------------------------");
-        
         
         System.out.printf("%-12s %-25s %-8s %-7s %-8s %-5s\n", "Course Code", "Course Name", "Credits", "Marks", "Grade", "GP");
         System.out.println("-----------------------------------------");
@@ -54,26 +59,35 @@ public class ReportService{
                                 
                 Course course = courseRepo.findByCode(res.getCourseCode());
                
-                System.out.printf("%-12s %-25s %-8d %-7.1f %-8s %-5.1f\n", 
-                        res.getCourseCode(), 
-                        course.getCourseName(), 
-                        course.getCredits(), 
-                        res.getMarks(), 
-                        res.getGrade(),
-                        res.getGradePoint());
-
-                
-                totalCreditWeightedPoints += (res.getGradePoint() * course.getCredits());
-                totalCredits += course.getCredits();
+                if (course != null) {
+                    System.out.printf("%-12s %-25s %-8d %-7.1f %-8s %-5.1f\n", 
+                            res.getCourseCode(), 
+                            course.getCourseName(), 
+                            course.getCredits(), 
+                            res.getMarks(), 
+                            res.getGrade(),
+                            res.getGradePoint());
+    
+                    totalCreditWeightedPoints += (res.getGradePoint() * course.getCredits());
+                    totalCredits += course.getCredits();
+                }
             }
         }
 
         System.out.println("-----------------------------------------");
 
-        //System.out.printf("Semester GPA     : %.2f\n", semesterGpa);
-        //System.out.printf("Overall GPA      : %.2f\n", semesterGpa);
+        // --- WENAS KARAPU THANA --- 
+        // Comment karala thibba ewa uncomment karala calculations gaththa
+        double semesterGpa = GPACalculator.calculateSemesterGPA(studentId, student.getCurrentYear(), student.getCurrentSemester(), resultList, courseRepo);
+        double overallGpa = GPACalculator.calculateOverallGPA(studentId, resultList, courseRepo);
+        String academicStanding = GPACalculator.getAcademicStanding(overallGpa);
+
+        System.out.printf("Semester GPA     : %.2f\n", semesterGpa);
+        System.out.printf("Overall GPA      : %.2f\n", overallGpa);
         System.out.println("Total Credits    : " + totalCredits);
-        //System.out.println("Academic Standing: " + academicStanding);
+        System.out.println("Academic Standing: " + academicStanding);
+        // --------------------------
+        
         System.out.println("=========================================");
     }
 }

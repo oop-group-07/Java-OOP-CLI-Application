@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-import edu.file.FileManager;
+import edu.file.fileManager;
 import edu.model.Student;
 import edu.repository.StudentRepo;
 
@@ -213,7 +213,7 @@ public class StudentService {
 
     // Load students from file to ArrayList
     public void loadStudents() {
-        ArrayList<Student> loadedStudents = FileManager.retriveStudentData();
+        ArrayList<Student> loadedStudents = fileManager.retriveStudentData();
         studentRepo.loadStudents(loadedStudents);
     }
 }
