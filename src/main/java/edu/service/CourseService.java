@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-import edu.file.FileManager;
+import edu.file.fileManager;
 import edu.model.Course;
 import edu.repository.CourseRepository;
 
@@ -311,7 +311,7 @@ public class CourseService {
 
     // Load courses from file to ArrayList
     public void loadCourses() {
-        ArrayList<Course> loadedCourses = FileManager.retrieveCourseData();
+        ArrayList<Course> loadedCourses = fileManager.retrieveCourseData();
         repository.loadCourse(loadedCourses);
     }
 }
