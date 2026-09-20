@@ -10,7 +10,7 @@ import edu.model.Student;
 import edu.repository.CourseRepository;
 import edu.repository.ResultRepo;
 import edu.repository.StudentRepo;
-import edu.model.GPACalculator; // GPACalculator
+import edu.service.GPACalculator; 
 
 public class ResultService {
 

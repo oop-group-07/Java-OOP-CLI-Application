@@ -1,4 +1,4 @@
-package edu.model;
+package edu.service;
 
 import java.util.ArrayList;
 import edu.model.Results;
